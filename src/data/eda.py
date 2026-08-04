@@ -45,6 +45,16 @@ def basic_eda(df):
     plt.savefig(save_path_cgpa)
     print(f"CGPA histogram chart saved to {save_path_cgpa}")
     
+    # Figure 3: Distribution of Gender
+    gender_counts = df["Gender"].value_counts()
+    plt.figure(3, figsize=(6, 6))
+    plt.pie(gender_counts.values, labels=gender_counts.index, autopct='%1.1f%%', startangle=90)
+    plt.title("Distribution of Gender")
+    plt.xlabel("Gender")
+    save_path_gender = os.path.join(results_dir, "gender_distribution.png")
+    plt.savefig(save_path_gender)
+    print(f"Gender distribution chart saved to {save_path_gender}")
+    
     plt.show()
 
 if __name__ == "__main__":
