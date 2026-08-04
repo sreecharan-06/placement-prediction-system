@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Placement Prediction System - Home{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center; padding: 50px 30px;">
+    <h2 style="font-family: var(--font-heading); font-size: 2rem; color: var(--primary); margin-bottom: 15px;">
+        Welcome to the Placement Prediction System
+    </h2>
+    <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto 35px auto; line-height: 1.6;">
+        An end-to-end Machine Learning pipeline designed to analyze student academic performance, work experience, and projects to predict graduation placement readiness and outcomes.
+    </p>
+
+    <!-- Main Navigation/Feature Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; text-align: left;">
+        
+        <!-- Card 1: Dataset -->
+        <a href="/dataset" style="text-decoration: none; color: inherit;">
+            <div class="info-card" style="cursor: pointer; transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; justify-content: space-between; border-color: #cbd5e1; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                <div>
+                    <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 15px;">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h4 style="margin-bottom: 10px;">1. Dataset Summary</h4>
+                    <p style="margin-bottom: 20px;">Explore the schema, count, classes, and first few rows of student records loaded directly from the database.</p>
+                </div>
+                <span style="font-weight: 600; color: var(--focus-color); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
+                    View Dataset <i class="fa-solid fa-arrow-right"></i>
+                </span>
+            </div>
+        </a>
+
+        <!-- Card 2: EDA -->
+        <a href="/eda" style="text-decoration: none; color: inherit;">
+            <div class="info-card" style="cursor: pointer; transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; justify-content: space-between; border-color: #cbd5e1; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                <div>
+                    <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 15px;">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h4 style="margin-bottom: 10px;">2. Data Analysis (EDA)</h4>
+                    <p style="margin-bottom: 20px;">Visualize placement distributions, examine missing values, null values, duplicates, and general feature descriptions.</p>
+                </div>
+                <span style="font-weight: 600; color: var(--focus-color); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
+                    Explore Analytics <i class="fa-solid fa-arrow-right"></i>
+                </span>
+            </div>
+        </a>
+
+        <!-- Card 3: Predictor -->
+        <a href="/prediction" style="text-decoration: none; color: inherit;">
+            <div class="info-card" style="cursor: pointer; transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; justify-content: space-between; border-color: #cbd5e1; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                <div>
+                    <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 15px;">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                    <h4 style="margin-bottom: 10px;">3. Interactive Predictor</h4>
+                    <p style="margin-bottom: 20px;">Input CGPA, internship details, engineering projects, backlogs, and communication quality to simulate placement chances.</p>
+                </div>
+                <span style="font-weight: 600; color: var(--focus-color); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
+                    Predict Placement <i class="fa-solid fa-arrow-right"></i>
+                </span>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<!-- Info Section -->
+<div class="card info-section">
+    <h3 class="card-title"><i class="fa-solid fa-circle-info"></i> Project Steps & Workflow</h3>
+    <div class="info-grid">
+        <div class="info-card">
+            <h4>Data Engineering</h4>
+            <p>We load files recursively, parse CSV parameters, and establish structured Pandas data representations.</p>
+        </div>
+        <div class="info-card">
+            <h4>Preprocessing & Modeling</h4>
+            <p>Perform feature scaling, convert categories, train ML classifiers (like decision forests), and tune performance.</p>
+        </div>
+        <div class="info-card">
+            <h4>Interactive Inference</h4>
+            <p>Pass metrics through classification systems to return a threshold assessment and customized study guidelines.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.08) !important;
+        border-color: var(--focus-color) !important;
+    }
+</style>
+{% endblock %}

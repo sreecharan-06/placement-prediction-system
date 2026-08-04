@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}EDA - Placement Prediction System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h3 class="card-title">
+        <i class="fa-solid fa-chart-pie"></i> Exploratory Data Analysis (EDA)
+    </h3>
+    <p style="color: var(--text-muted); margin-bottom: 25px;">
+        Exploratory Data Analysis helps us understand the relationships, distributions, and patterns within the student placement dataset. Below is the visualization of the target variable and key feature distributions.
+    </p>
+
+    <!-- Analysis Images Container Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin: 35px 0;">
+        <!-- Placement Distribution Image -->
+        <div class="eda-image-container" style="margin: 0;">
+            <h4 style="font-family: var(--font-heading); color: var(--primary); margin-bottom: 15px;">
+                Target Variable Class Distribution
+            </h4>
+            <img src="/results/images.png" alt="Placement Status Count Chart" class="eda-image">
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">
+                Fig 1: Bar chart comparing the count of placed (1.0) vs. not placed (0.0) students in the dataset.
+            </p>
+        </div>
+        
+        <!-- CGPA Histogram Image -->
+        <div class="eda-image-container" style="margin: 0;">
+            <h4 style="font-family: var(--font-heading); color: var(--primary); margin-bottom: 15px;">
+                Distribution of Student CGPA
+            </h4>
+            <img src="/results/cgpa_histogram.png" alt="CGPA Histogram Chart" class="eda-image">
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">
+                Fig 2: Histogram showing the frequency distribution of CGPA across the student population.
+            </p>
+        </div>
+    </div>
+
+    <!-- Stats breakdown -->
+    <div style="margin-top: 30px;">
+        <h4 style="font-family: var(--font-heading); color: var(--primary); margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-square-poll-vertical" style="color: var(--focus-color);"></i> Class Balance Analysis
+        </h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+            A balanced dataset prevents classification models from developing bias toward the majority class. Here is the class count breakdown:
+        </p>
+
+        <table class="summary-table">
+            <tr>
+                <th>Students Likely Placed (1.0)</th>
+                <td><strong>{{ counts[1] }}</strong> students ({{ "%.1f"|format(percentages[1]) }}%)</td>
+            </tr>
+            <tr>
+                <th>Students At Placement Risk (0.0)</th>
+                <td><strong>{{ counts[0] }}</strong> students ({{ "%.1f"|format(percentages[0]) }}%)</td>
+            </tr>
+            <tr>
+                <th>Total Records Analyzed</th>
+                <td><strong>{{ counts[1] + counts[0] }}</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Feature Insights -->
+    <div style="margin-top: 35px;">
+        <h4 style="font-family: var(--font-heading); color: var(--primary); margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-tags" style="color: var(--focus-color);"></i> Key Predictor Features
+        </h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+            Our dataset contains a total of {{ total_features }} columns, with the following key attributes used for placement analysis:
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 15px;">
+            <div style="background-color: #f8fafc; border-left: 4px solid var(--focus-color); padding: 12px 15px; border-radius: 0 8px 8px 0;">
+                <strong style="color: var(--primary);">CGPA (Continuous variable)</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">The cumulative grade point average of the student. High CGPA shows academic consistency.</p>
+            </div>
+            <div style="background-color: #f8fafc; border-left: 4px solid var(--focus-color); padding: 12px 15px; border-radius: 0 8px 8px 0;">
+                <strong style="color: var(--primary);">Internships (Integer variable)</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">Number of relevant industry internships completed, indicating practical exposure.</p>
+            </div>
+            <div style="background-color: #f8fafc; border-left: 4px solid var(--focus-color); padding: 12px 15px; border-radius: 0 8px 8px 0;">
+                <strong style="color: var(--primary);">Projects (Integer variable)</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">Number of capstone engineering projects built, indicating development skills.</p>
+            </div>
+            <div style="background-color: #f8fafc; border-left: 4px solid var(--focus-color); padding: 12px 15px; border-radius: 0 8px 8px 0;">
+                <strong style="color: var(--primary);">HistoryOfBacklogs (Categorical variable)</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">Indicates whether the student has any outstanding academic backlogs.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

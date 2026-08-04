@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Placement Predictor{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="predictor-layout">
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <h3 class="card-title">
+                <i class="fa-solid fa-sliders"></i> Enter Student Details
+            </h3>
+            <form action="/prediction" method="POST">
+                <div class="form-grid">
+                    <!-- CGPA Input -->
+                    <div class="form-group">
+                        <label for="cgpa" class="form-label">
+                            <i class="fa-solid fa-gauge-high"></i> Cumulative GPA (CGPA)
+                        </label>
+                        <div class="input-container">
+                            <input type="number" step="0.01" min="0" max="10" name="cgpa" id="cgpa" 
+                                   class="form-control" placeholder="e.g. 8.45" 
+                                   value="{{ request.form.get('cgpa', '') }}" required>
+                            <i class="fa-solid fa-graduation-cap input-icon"></i>
+                        </div>
+                        <span class="form-help">Enter score on a scale of 0 - 10</span>
+                    </div>
+
+                    <!-- Internships Input -->
+                    <div class="form-group">
+                        <label for="internships" class="form-label">
+                            <i class="fa-solid fa-briefcase"></i> Internships Completed
+                        </label>
+                        <div class="input-container">
+                            <input type="number" min="0" max="10" name="internships" id="internships" 
+                                   class="form-control" placeholder="e.g. 2" 
+                                   value="{{ request.form.get('internships', '') }}" required>
+                            <i class="fa-solid fa-laptop-code input-icon"></i>
+                        </div>
+                        <span class="form-help">Number of relevant work stints</span>
+                    </div>
+
+                    <!-- Projects Input -->
+                    <div class="form-group">
+                        <label for="projects" class="form-label">
+                            <i class="fa-solid fa-diagram-project"></i> Projects Completed
+                        </label>
+                        <div class="input-container">
+                            <input type="number" min="0" max="20" name="projects" id="projects" 
+                                   class="form-control" placeholder="e.g. 3" 
+                                   value="{{ request.form.get('projects', '') }}" required>
+                            <i class="fa-solid fa-gears input-icon"></i>
+                        </div>
+                        <span class="form-help">Technical projects in your portfolio</span>
+                    </div>
+
+                    <!-- Backlogs Input -->
+                    <div class="form-group">
+                        <label for="backlogs" class="form-label">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Active Backlogs
+                        </label>
+                        <div class="input-container">
+                            <input type="number" min="0" max="15" name="backlogs" id="backlogs" 
+                                   class="form-control" placeholder="e.g. 0" 
+                                   value="{{ request.form.get('backlogs', '') }}" required>
+                            <i class="fa-solid fa-circle-exclamation input-icon"></i>
+                        </div>
+                        <span class="form-help">Number of backlogs yet to clear</span>
+                    </div>
+
+                    <!-- Extracurricular Activities -->
+                    <div class="form-group">
+                        <label for="extracurricular" class="form-label">
+                            <i class="fa-solid fa-people-group"></i> Extracurriculars
+                        </label>
+                        <div class="input-container">
+                            <select name="extracurricular" id="extracurricular" class="form-control" required>
+                                <option value="1" {% if request.form.get('extracurricular') == '1' %}selected{% endif %}>Yes, active participation</option>
+                                <option value="0" {% if request.form.get('extracurricular') == '0' %}selected{% endif %}>No, focus on academics</option>
+                            </select>
+                            <i class="fa-solid fa-basketball input-icon"></i>
+                        </div>
+                        <span class="form-help">Sports, clubs, or leadership roles</span>
+                    </div>
+
+                    <!-- Communication Skills -->
+                    <div class="form-group">
+                        <label for="communication" class="form-label">
+                            <i class="fa-solid fa-comments"></i> Communication Rating
+                        </label>
+                        <div class="input-container">
+                            <select name="communication" id="communication" class="form-control" required>
+                                <option value="3" {% if request.form.get('communication') == '3' or not request.form.get('communication') %}selected{% endif %}>Excellent / Professional</option>
+                                <option value="2" {% if request.form.get('communication') == '2' %}selected{% endif %}>Good / Competent</option>
+                                <option value="1" {% if request.form.get('communication') == '1' %}selected{% endif %}>Average / Basic</option>
+                            </select>
+                            <i class="fa-solid fa-bullhorn input-icon"></i>
+                        </div>
+                        <span class="form-help">Self-assessment rating</span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn-primary">
+                            <i class="fa-solid fa-circle-play"></i> Predict Placement Status
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel">
+            <div class="results-card">
+                {% if prediction is defined %}
+                    <div class="result-display">
+                        {% if prediction == 1 %}
+                            <div class="result-badge">🎉</div>
+                            <h3 class="result-status placed-text">Likely to be Placed</h3>
+                        {% else %}
+                            <div class="result-badge">⚠️</div>
+                            <h3 class="result-status not-placed-text">Placement Risk</h3>
+                        {% endif %}
+
+                        <div class="meter-container">
+                            <div class="meter-fill {% if prediction == 1 %}success{% else %}warning{% endif %}" 
+                                 id="probability-meter" 
+                                 style="width: 0%;"></div>
+                        </div>
+                        
+                        <p class="result-score">
+                            Probability: <strong>{{ "%.1f"|format(probability * 100) }}%</strong>
+                        </p>
+
+                        <div class="recommendations-box">
+                            <h4>
+                                <i class="fa-solid fa-lightbulb" style="color:#eab308;"></i> Advice:
+                            </h4>
+                            <ul class="recommendations-list">
+                                {% if cgpa_val < 7.5 %}
+                                    <li>Focus on elevating your CGPA above 7.5.</li>
+                                {% endif %}
+                                {% if internships_val == 0 %}
+                                    <li>Secure at least 1 internship to build experience.</li>
+                                {% endif %}
+                                {% if projects_val < 2 %}
+                                    <li>Develop 1-2 capstone engineering projects.</li>
+                                {% endif %}
+                                {% if backlogs_val > 0 %}
+                                    <li>Prioritize clearing your active backlog(s).</li>
+                                {% endif %}
+                                {% if prediction == 1 and cgpa_val >= 7.5 and internships_val > 0 %}
+                                    <li>Excellent profile! Continue mock interviews.</li>
+                                {% endif %}
+                                <li>Practice coding skills consistently.</li>
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="results-placeholder">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h3>Awaiting Input</h3>
+                        <p style="font-size: 0.85rem; margin-top: 5px;">
+                            Fill in your parameters and click predict to calculate.
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% if prediction is defined %}
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const meter = document.getElementById('probability-meter');
+            if (meter) {
+                meter.style.width = '{{ (probability * 100)|round|int }}%';
+            }
+        }, 150);
+    });
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Placement Prediction System{% endblock %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="main-header">
+        <h1>Placement Prediction System</h1>
+        <p>Machine Learning Project using Flask</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-links">
+            <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+            <span class="divider">|</span>
+            <a href="/dataset" class="nav-link {% if request.path == '/dataset' %}active{% endif %}">Dataset</a>
+            <span class="divider">|</span>
+            <a href="/eda" class="nav-link {% if request.path == '/eda' %}active{% endif %}">EDA</a>
+            <span class="divider">|</span>
+            <a href="/preprocessing" class="nav-link {% if request.path == '/preprocessing' %}active{% endif %}">Preprocessing</a>
+            <span class="divider">|</span>
+            <a href="/models" class="nav-link {% if request.path == '/models' %}active{% endif %}">Models</a>
+            <span class="divider">|</span>
+            <a href="/evaluation" class="nav-link {% if request.path == '/evaluation' %}active{% endif %}">Evaluation</a>
+            <span class="divider">|</span>
+            <a href="/comparison" class="nav-link {% if request.path == '/comparison' %}active{% endif %}">Comparison</a>
+            <span class="divider">|</span>
+            <a href="/prediction" class="nav-link {% if request.path == '/prediction' %}active{% endif %}">Prediction</a>
+        </div>
+    </nav>
+
+    <!-- Main Body Section with Gradient -->
+    <main class="page-body">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

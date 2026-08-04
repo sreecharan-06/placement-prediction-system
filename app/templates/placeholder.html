@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Placement Prediction System{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center; padding: 60px 40px;">
+    <div style="font-size: 4.5rem; color: #94a3b8; margin-bottom: 25px;">
+        <i class="{{ icon }}"></i>
+    </div>
+    
+    <h2 style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary); margin-bottom: 12px;">
+        {{ title }}
+    </h2>
+    
+    <div style="background-color: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 25px; max-width: 600px; margin: 0 auto 30px auto;">
+        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin: 0;">
+            {{ description }}
+        </p>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 15px;">
+        <a href="/" class="btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-house"></i> Back to Dashboard
+        </a>
+        <a href="/prediction" class="btn-primary" style="background-color: #cbd5e1; color: var(--text-dark); text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-rocket"></i> Try Predictor
+        </a>
+    </div>
+</div>
+
+<style>
+    .btn-primary:hover {
+        background-color: var(--primary-hover);
+    }
+</style>
+{% endblock %}
