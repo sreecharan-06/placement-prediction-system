@@ -39,6 +39,7 @@ def basic_ede(df):
     
     plt.savefig(os.path.join(results_dir, "placement_status_bar.png"))
     plt.show()
+    plt.close()
 
 
 def univariant(df):
@@ -53,6 +54,7 @@ def univariant(df):
     plt.ylabel("Frequency")
     plt.savefig(os.path.join(results_dir, "histogram_chat.png"))
     plt.show()
+    plt.close()
 
     gendercount=df["Gender"].value_counts()
     plt.figure(figsize = (6,5))
@@ -60,6 +62,7 @@ def univariant(df):
     plt.title("Gender distribution piechart")
     plt.savefig(os.path.join(results_dir, "piechart.png"))
     plt.show()
+    plt.close()
 
 
 def bivariate(df):
@@ -76,6 +79,7 @@ def bivariate(df):
     plt.show()
     plt.close()
 
+    plt.figure(figsize = (6,5))
     placed = df[df["PlacementStatus"] == 1]["CGPA"]
     not_placed = df[df["PlacementStatus"] == 0]["CGPA"]
     plt.boxplot([placed, not_placed], tick_labels=["placed", "not_placed"])
@@ -84,6 +88,7 @@ def bivariate(df):
     plt.ylabel("CGPA")
     plt.savefig(os.path.join(results_dir, "boxplot_cgpa.png"))
     plt.show()
+    plt.close()
 
 
 def multivariate(df):
