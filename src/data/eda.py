@@ -1,5 +1,6 @@
 import os
 import matplotlib.pyplot as plt
+import seaborn as sns
 from src.data.load_data import load_data
 
 def basic_eda(df):
@@ -54,6 +55,22 @@ def basic_eda(df):
     save_path_gender = os.path.join(results_dir, "gender_distribution.png")
     plt.savefig(save_path_gender)
     print(f"Gender distribution chart saved to {save_path_gender}")
+    
+    # Figure 4: Correlation Heatmap of key metrics
+    corr_cols = [
+        'CGPA', 'Internships', 'Projects', 'PlacementStatus',
+        'CodingTestScore', 'MockInterviewScore', 'AptitudeTestScore', 
+        'SoftSkillsRating', 'ExtraCurricular'
+    ]
+    plt.figure(4, figsize=(10, 8))
+    # Make sure we only correlate numerical columns
+    corr_matrix = df[corr_cols].corr()
+    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5, vmin=-1, vmax=1)
+    plt.title("Correlation Heatmap of Placement Metrics")
+    plt.tight_layout()
+    save_path_corr = os.path.join(results_dir, "correlation_heatmap.png")
+    plt.savefig(save_path_corr)
+    print(f"Correlation heatmap saved to {save_path_corr}")
     
     plt.show()
 
