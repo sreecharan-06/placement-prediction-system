@@ -78,7 +78,7 @@ def bivariate(df):
 
     placed = df[df["PlacementStatus"] == 1]["CGPA"]
     not_placed = df[df["PlacementStatus"] == 0]["CGPA"]
-    plt.boxplot([placed, not_placed], label=["placed", "not_placed"])
+    plt.boxplot([placed, not_placed], tick_labels=["placed", "not_placed"])
     plt.title("CGPA vs PlacementStatus")
     plt.xlabel("PlacementStatus")
     plt.ylabel("CGPA")
